@@ -65,7 +65,8 @@ const server = net.createServer( (cSock) => {
 	});
   
 	//if client sends data, append to log file
-	cSock.on('data', function(jsondata) {  
+	cSock.on('data', function(buff) {  
+		var jsondata = JSON.parse(buff.toString());
 		/*		
 		fs.appendFile(path, inBuff, function(err) {
 			if(err) {
@@ -93,7 +94,8 @@ const server = net.createServer( (cSock) => {
 		  	console.log('Inserted new entry, id: '+ res.insertId);
 		});
 		// connect log the query and close connection
-		console.log(query.sql);
+		console.log(insertQuery);
+		console.log(jsondata.toString());
 		db.end(function(err) {
 			if (err) {
 				console.error('error closing DB: ' + err.stack);
